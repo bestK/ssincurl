@@ -81,8 +81,8 @@
             <td v-for="conf in configs">{{conf.container_port}}</td>
         </tr>
     </table>
-    <pre>{{configs | json}}</pre>
-    <button type="button" class="btn btn-default" v-on:click="backForm" style="display: none">清除</button>
+    <!--<pre>{{configs | json}}</pre>-->
+    <button type="button" class="btn btn-default abc" v-on:click="clearForm" style="display: none">清除</button>
 </div>
 
 <script type="text/javascript">
@@ -96,10 +96,16 @@
         },
         methods: {
             newConfig: function () {
+                layer.msg('解析中', {
+                    time: 0, //不自动关闭
+                    shadeClose: false
+                });
+                $('.btn.btn-default').attr("disabled",true)
                 this.$http.get('api.php?email=' + this.email + '&password=' + this.password, {emulateJSON: true}).then(
                         function (response) {
                             if (response.body.indexOf('Failed')!=-1){
                                 layer.msg(response.body,{icon:2});
+                                $('.btn.btn-default').attr("disabled",false)
                                 return
                             }
 
@@ -118,21 +124,23 @@
                                             ssConfigs.host = reHost(json[j][k].host)
                                             this.configs.push(ssConfigs)
                                             layer.msg('解析成功!',{icon:6});
+                                            $('.btn.btn-default').attr("disabled",false)
                                         }
                                     }
                                 }
                             }
                             $('.table.table-danger').attr("style","")
-                            $('.ssform').hide()
+                            $('.ssform').css("display","none")
                             $('.btn.btn-default').show()
                         }
                 )
             },
-            backForm:function () {
+            clearForm:function () {
                 this.configs=[]
                 $('.table.table-danger').hide()
-                $('.btn.btn-default').hide()
-                $('.ssform').show()
+                $('.btn.btn-default').show()
+                $('.btn.btn-default.abc').hide()
+                $('.ssform').css("display","block")
             }
         }
     })
