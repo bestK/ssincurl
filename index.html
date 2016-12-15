@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="">
+
+    <title>Hello guy!</title>
+    <!--jQuery-->
+    <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+    <!--Vue-->
+    <script src="//cdn.bootcss.com/vue/2.1.5/vue.js"></script>
+    <script src="//cdn.bootcss.com/vue-resource/1.0.3/vue-resource.js"></script>
+    <!-- Bootstrap core CSS -->
+    <link href="http://v3.bootcss.com/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="http://v3.bootcss.com/examples/starter-template/starter-template.css" rel="stylesheet">
+    <!--layer-->
+    <script src="//cdn.bootcss.com/layer/3.0.1/layer.min.js"></script>
+
+</head>
+
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">arukas解析</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="javascript:about()">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+<br>
+<div class="container" id="container">
+    <div class="ssform">
+        <form role="form">
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" class="form-control" id="email" v-model="email">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" v-model="password">
+            </div>
+
+            <button type="button" class="btn btn-default" v-on:click="newConfig">Submit</button>
+        </form>
+        <br><br><br><br><br>
+        <b>初衷</b>
+        <p>IP||Port天天变，好烦啊</p>
+        <b>支持的功能</b>
+        <p>根据你自己的帐号密码,直接获取arukasron容器的格式化IP与端口</p>
+    </div>
+    <table class="table table-danger" style="display: none">
+        <tr>
+            <td>容器IP</td>
+            <td v-for="conf in configs">{{conf.host}}</td>
+        </tr>
+        <tr>
+            <td>映射端口</td>
+            <td v-for="conf in configs">{{conf.service_port}}</td>
+        </tr>
+        <tr>
+            <td>实际端口</td>
+            <td v-for="conf in configs">{{conf.container_port}}</td>
+        </tr>
+    </table>
+    <pre>{{configs | json}}</pre>
+    <button type="button" class="btn btn-default" v-on:click="backForm" style="display: none">清除</button>
+</div>
+
+<script type="text/javascript">
+    new Vue({
+        el: '#container',
+        data: {
+            message: '',
+            email: '',
+            password: '',
+            configs: []
+        },
+        methods: {
+            newConfig: function () {
+                this.$http.get('api.php?email=' + this.email + '&password=' + this.password, {emulateJSON: true}).then(
+                        function (response) {
+                            if (response.body.indexOf('Failed')!=-1){
+                                layer.msg(response.body,{icon:5});
+                                return
+                            }
+
+                            var result = JSON.parse(response.body)
+                            this.configs = []
+                            for (var i = 0; i < result.data.length; i++) {
+                                var ssObj = result.data[i].attributes.port_mappings
+                                var jsonText = JSON.stringify(ssObj)
+                                var json = eval('(' + jsonText + ')')
+                                if (json != null) {
+                                    for (var j = 0; j < json.length; j++) {
+                                        for (var k = 0; k < json[j].length; k++) {
+                                            var ssConfigs = {}
+                                            ssConfigs.service_port = json[j][k].service_port
+                                            ssConfigs.container_port = json[j][k].container_port
+                                            ssConfigs.host = reHost(json[j][k].host)
+                                            this.configs.push(ssConfigs)
+                                            layer.msg('解析成功!',{icon:6});
+                                        }
+                                    }
+                                }
+                            }
+                            $('.table.table-danger').attr("style","")
+                            $('.ssform').hide()
+                            $('.btn.btn-default').show()
+                        }
+                )
+            },
+            backForm:function () {
+                this.configs=[]
+                $('.table.table-danger').hide()
+                $('.btn.btn-default').hide()
+                $('.ssform').show()
+            }
+        }
+    })
+
+    function reHost(oldhost) {
+        host = oldhost.match(/seaof-(\S*).jp/)[1]
+        host = host.replace(/-/g, ".")
+        return host
+    }
+
+
+</script>
+</body>
+</html>
