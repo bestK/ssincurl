@@ -122,13 +122,13 @@
                                             ssConfigs.service_port = json[j][k].service_port
                                             ssConfigs.container_port = json[j][k].container_port
                                             ssConfigs.host = reHost(json[j][k].host)
-                                            this.configs.push(ssConfigs)
-                                            layer.msg('解析成功!',{icon:6});
-                                            $('.btn.btn-default').attr("disabled",false)
+                                            this.configs.push(ssConfigs)                                           
                                         }
                                     }
                                 }
                             }
+                            layer.msg('解析成功!',{icon:6});
+                            $('.btn.btn-default').attr("disabled",false)
                             $('.table.table-danger').attr("style","")
                             $('.ssform').css("display","none")
                             $('.btn.btn-default').show()
