@@ -6,10 +6,8 @@ $cookie = dirname(__FILE__) . '/cookie_ss.txt';
 //登录成功之后保存cookie
 login($cookie);
 
-//登录成功之后访问的页面
-$contextUrl = "https://app.arukas.io/api/containers";
 //获取数据
-get_content($contextUrl, $cookie);
+get_content($cookie);
 
 //删除cookie文件
 @ unlink($cookie);
@@ -44,8 +42,10 @@ function login($cookie)
 
 
 //登录成功后获取数据
-function get_content($contextUrl, $cookie)
+function get_content($cookie)
 {
+    //登录成功之后访问的页面
+    $contextUrl = "https://app.arukas.io/api/containers";
     $ch_content = curl_init();
     curl_setopt($ch_content, CURLOPT_URL, $contextUrl);
     //curl_setopt($ch, CURLOPT_HEADER, 0);
