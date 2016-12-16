@@ -98,7 +98,8 @@
             newConfig: function () {
                 layer.msg('解析中', {
                     time: 0, //不自动关闭
-                    shadeClose: false
+                    shadeClose: false,
+                    shade: 0.3
                 });
                 $('.btn.btn-default').attr("disabled",true)
                 this.$http.get('api.php?email=' + this.email + '&password=' + this.password, {emulateJSON: true}).then(
