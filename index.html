@@ -101,12 +101,12 @@
                     shadeClose: false,
                     shade: 0.3
                 });
-                $('.btn.btn-default').attr("disabled",true)
+                $('.btn.btn-default').attr("disabled", true)
                 this.$http.get('api.php?email=' + this.email + '&password=' + this.password, {emulateJSON: true}).then(
                         function (response) {
-                            if (response.body.indexOf('Failed')!=-1){
-                                layer.msg(response.body,{icon:2});
-                                $('.btn.btn-default').attr("disabled",false)
+                            if (response.body.indexOf('Failed') != -1) {
+                                layer.msg(response.body, {icon: 2});
+                                $('.btn.btn-default').attr("disabled", false)
                                 return
                             }
 
@@ -122,44 +122,44 @@
                                             var ssConfigs = {}
                                             ssConfigs.service_port = json[j][k].service_port
                                             ssConfigs.container_port = json[j][k].container_port
-                                            ssConfigs.host = reHost(json[j][k].host)
-                                            this.configs.push(ssConfigs)                                           
+                                            ssConfigs.host = this.reHost(json[j][k].host)
+                                            this.configs.push(ssConfigs)
                                         }
                                     }
                                 }
                             }
-                            layer.msg('解析成功!',{icon:6});
-                            $('.btn.btn-default').attr("disabled",false)
-                            $('.table.table-danger').attr("style","")
-                            $('.ssform').css("display","none")
+                            layer.msg('解析成功!', {icon: 6});
+                            $('.btn.btn-default').attr("disabled", false)
+                            $('.table.table-danger').attr("style", "")
+                            $('.ssform').css("display", "none")
                             $('.btn.btn-default').show()
                         }
                 )
             },
-            clearForm:function () {
-                this.configs=[]
-                this.password=null
+            clearForm: function () {
+                this.configs = []
+                this.password = null
                 $('.table.table-danger').hide()
                 $('.btn.btn-default').show()
                 $('.btn.btn-default.abc').hide()
-                $('.ssform').css("display","block")
+                $('.ssform').css("display", "block")
+            },
+            reHost: function (oldhost) {
+                host = oldhost.match(/seaof-(\S*).jp/)[1]
+                host = host.replace(/-/g, ".")
+                return host
             }
         }
     })
 
-    function reHost(oldhost) {
-        host = oldhost.match(/seaof-(\S*).jp/)[1]
-        host = host.replace(/-/g, ".")
-        return host
-    }
 </script>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
-    <script src="http://v3.bootcss.com/dist/js/bootstrap.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="http://v3.bootcss.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://v3.bootcss.com/dist/js/bootstrap.min.js"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="http://v3.bootcss.com/assets/js/ie10-viewport-bug-workaround.js"></script>
 </body>
 </html>
