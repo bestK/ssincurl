@@ -47,10 +47,9 @@
         </div>
     </div>
 </nav>
-<br>
-<div class="container">
+<div class="container" style="padding-top:30px">
     <div v-show="!configs">
-        <form role="form">
+        <form role="form"  style="margin-bottom:66px">
             <div class="form-group">
                 <label for="email">Email address</label>
                 <input type="email" class="form-control" v-model="email">
@@ -62,7 +61,7 @@
 
             <button type="button" class="btn btn-default" @click="newConfig">Submit</button>
         </form>
-        <br><br><br><br><br>
+        
         <b>初衷</b>
         <p>IP||Port天天变，好烦啊</p>
         <b>支持的功能</b>
@@ -82,8 +81,6 @@
             <td v-for="conf in configs">{{conf.container_port}}</td>
         </tr>
     </table>
-    <pre>{{configsCache | json}}</pre>
-    <pre>{{configs | json}}</pre>
     <button type="button" class="btn btn-default abc" v-show="configs" @click="clearForm">返回</button>
 </div><!-- /.container --> <!-- 在真实开发中较长的内容，我们应当注释闭标签 -->
 <!--
