@@ -5,6 +5,7 @@ RUN apt-get update && apt-get install -y php5-curl php5-gd
 # pdo_mysql 为 PHP 连接 MySQL 扩展
 #RUN docker-php-ext-install pdo_mysql
 #RUN a2enmod rewrite
-COPY . /var/www
+
 WORKDIR /var/www
 
+COPY . /var/www
