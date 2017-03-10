@@ -56,7 +56,7 @@ new Vue({
             return host
         },
         lmsg: function () {
-            layer.msg('click me', {icon: 6})
+            layer.msg('Everything is Nothing', {icon: 6})
         }
     }
 })
