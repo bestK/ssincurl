@@ -28,8 +28,16 @@ new Vue({
                     this.configs = []
                     for (var i = 0; i < result.data.length; i++) {
                         var mappingsObj = result.data[i].attributes.port_mappings
+                        var cmd = result.data[i].attributes.cmd
+                        var pwd = this.rePwd(cmd)
+                        var lock = this.reLock(cmd)
+                        var image_name = result.data[i].attributes.image_name
+                        if (image_name.indexOf("ss-with-net-speeder") ==-1) {
+                            continue
+                        }
                         var mappingText = JSON.stringify(mappingsObj)
                         var mappingJson = eval('(' + mappingText + ')')
+                        var ssHead = 'ss://'
                         if (mappingJson) {
                             for (var j = 0; j < mappingJson.length; j++) {
                                 for (var k = 0; k < mappingJson[j].length; k++) {
@@ -37,6 +45,11 @@ new Vue({
                                     mappingResult.service_port = mappingJson[j][k].service_port
                                     mappingResult.container_port = mappingJson[j][k].container_port
                                     mappingResult.host = this.reHost(mappingJson[j][k].host)
+                                    mappingResult.cmd = cmd
+                                    mappingResult.pwd = pwd
+                                    mappingResult.lock = lock
+                                    ssUrl = lock+':'+pwd+'@'+this.reHost(mappingJson[j][k].host)+':'+mappingJson[j][k].service_port
+                                    mappingResult.ss_url = ssHead+this.base64DeCode(ssUrl)
                                     this.configs.push(mappingResult)
                                 }
                             }
