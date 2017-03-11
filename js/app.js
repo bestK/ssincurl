@@ -68,6 +68,26 @@ new Vue({
             host = host.replace(/-/g, ".")
             return host
         },
+        rePwd: function (oldpwd) {
+            if(oldpwd == null) return
+            pwd = oldpwd.substring(oldpwd.indexOf("k ") + 2,oldpwd.indexOf(" -m"))
+            return pwd
+        },
+        reLock: function (oldLock) {
+            if(oldLock == null) return
+            lock = oldLock.substring(oldLock.indexOf("m ")+2)
+            return lock
+        },
+        base64DeCode: function (str) {
+            var rawStr = str
+            var wordArray = CryptoJS.enc.Utf8.parse(rawStr)
+            var base64 = CryptoJS.enc.Base64.stringify(wordArray)
+            return base64
+        },
+        showQrCode: function (url,port) {
+            $("canvas").remove()
+            $("#"+port).qrcode(url)
+        },
         lmsg: function () {
             layer.msg('Everything is Nothing', {icon: 6})
         }
