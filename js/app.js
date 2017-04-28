@@ -3,7 +3,7 @@ new Vue({
     data: {
         email: '',
         password: '',
-        configs: null,
+        configs: [],
         //configsCache:localStorage.configsCache
     },
     methods: {
@@ -21,11 +21,8 @@ new Vue({
                         return
                     }
                     var result = JSON.parse(response.body)
-                    if (result.data.length<1) {
-                        layer.msg('你没有创建任何容器实例', {icon: 5});
-                        return
-                    }
-                    this.configs = []
+            
+               
                     for (var i = 0; i < result.data.length; i++) {
                         var mappingsObj = result.data[i].attributes.port_mappings
                         var cmd = result.data[i].attributes.cmd
@@ -55,6 +52,12 @@ new Vue({
                             }
                         }
                     }
+                    
+                    if (!this.configs.length>0) {
+                        layer.msg('没有创建或启动任何实例', {icon: 5});
+                        return
+                    }
+                    
                     layer.msg('解析成功!', {icon: 6})
                     //localStorage.configsCache = this.configs
                 }
