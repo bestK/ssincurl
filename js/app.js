@@ -3,7 +3,7 @@ new Vue({
     data: {
         email: '',
         password: '',
-        configs: [],
+        configs: null
         //configsCache:localStorage.configsCache
     },
     methods: {
@@ -21,8 +21,7 @@ new Vue({
                         return
                     }
                     var result = JSON.parse(response.body)
-            
-               
+                    this.configs = []               
                     for (var i = 0; i < result.data.length; i++) {
                         var mappingsObj = result.data[i].attributes.port_mappings
                         var cmd = result.data[i].attributes.cmd
