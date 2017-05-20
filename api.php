@@ -1,5 +1,6 @@
 <?php
 
+header("Content-type: application/json");
 
 $cookie = dirname(__FILE__) . '/cookie_ss.txt';
 
