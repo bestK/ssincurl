@@ -1,7 +1,5 @@
 <?php
 
-header("Content-type: application/json");
-
 $cookie = dirname(__FILE__) . '/cookie_ss.txt';
 
 //登录成功之后保存cookie
@@ -62,6 +60,7 @@ function get_content($cookie)
 
     return $result;
     curl_close($ch_content);
+    header("Content-type: application/json");
 }
 
 
