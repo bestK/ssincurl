@@ -32,8 +32,7 @@ function login($cookie)
     $status = $content->status;
 
     if ($status != "200") {
-        echo $content->message;
-        echo ' 登录失败！请检查帐号密码。';
+        echo $content;
         exit;
     };
     curl_close($ch_login);
