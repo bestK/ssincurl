@@ -16,8 +16,8 @@ new Vue({
 
             this.$http.get('api.php?email=' + this.email + '&password=' + this.password, {emulateJSON: true}).then(
                 function (response) {
-                    if (response.body.indexOf('Failed') != -1) {
-                        layer.msg(response.body, {icon: 2});
+                    if (response.status == "422") {
+                        layer.msg(response.message, {icon: 2});
                         return
                     }
                     //var result = JSON.parse(response.body)
