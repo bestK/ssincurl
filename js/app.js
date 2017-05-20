@@ -20,7 +20,8 @@ new Vue({
                         layer.msg(response.body, {icon: 2});
                         return
                     }
-                    var result = JSON.parse(response.body)
+                    //var result = JSON.parse(response.body)
+                    var result = response.body
                     this.configs = []               
                     for (var i = 0; i < result.data.length; i++) {
                         var mappingsObj = result.data[i].attributes.port_mappings
