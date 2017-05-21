@@ -33,7 +33,7 @@ function login($cookie)
     $status = $content->status;
 
     if ($status != "200") {
-        echo $content;
+        return $content;
         exit;
     };
     curl_close($ch_login);
