@@ -6,6 +6,8 @@ $cookie = dirname(__FILE__) . '/cookie_ss.txt';
 //登录成功之后保存cookie
 login($cookie);
 
+$login = false;
+
 //获取数据
 get_content($cookie);
 
@@ -36,6 +38,7 @@ function login($cookie)
         return $content;
         exit;
     };
+    $login = ture;
     curl_close($ch_login);
 }
 
@@ -54,7 +57,7 @@ function get_content($cookie)
 
     $httpcode = curl_getinfo($ch_content, CURLINFO_HTTP_CODE);
     if ($httpcode != "200") {
-        echo "Oops!";
+        return $ch_content;
         exit;
     }
 
