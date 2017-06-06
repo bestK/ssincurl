@@ -3,10 +3,10 @@ header("Content-type: application/json");
 
 $cookie = dirname(__FILE__) . '/cookie_ss.txt';
 
+$login = false;
+
 //登录成功之后保存cookie
 login($cookie);
-
-$login = false;
 
 //获取数据
 if ($login) get_content($cookie);
