@@ -16,7 +16,7 @@ new Vue({
 
             this.$http.get('api.php?email=' + this.email + '&password=' + this.password, {emulateJSON: true}).then(
                 function (response) {
-                    if (response.status == "401") {
+                    if (response.status == 401) {
                         layer.msg(response.message, {icon: 2});
                         return
                     }
