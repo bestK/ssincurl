@@ -9,7 +9,7 @@ $login = false;
 login($cookie);
 
 //获取数据
-if ($login){
+if($login) {
     get_content($cookie);
 }
 
