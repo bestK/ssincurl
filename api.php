@@ -36,11 +36,10 @@ function login($cookie)
 
     $status = $content->status;
 
-    if ($status != "200") {
-        return $content;
-        exit;
+    if ($status == "200" || $status == 200) {
+        $login = ture;
     };
-    $login = ture;
+    return $content;
     curl_close($ch_login);
 }
 
