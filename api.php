@@ -9,9 +9,7 @@ $login = false;
 login($cookie);
 
 //获取数据
-if($login) {
-    get_content($cookie);
-}
+get_content($cookie);
 
 //删除cookie文件
 @ unlink($cookie);
