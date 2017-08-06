@@ -1,4 +1,4 @@
-# ssincurl
+# ssincurl 失效
 
 #更方便的 gass https://gass.wo.ci/
 
